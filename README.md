@@ -2,7 +2,7 @@ Remove static watermarks from videos with minimal setup.
 
 ![example of watermark removal](example_processed_frame.png)
 
-Really basic, but works well enough for simple static watermarks, and can run on a laptop CPU (x3 real-time on a i5-5287U (2015 MacBook Pro), x9 real-time on a i5-8400).
+Really basic, but works well enough for simple static watermarks, and can run on a laptop CPU (x3 real-time on a i5-5287U (2015 MacBook Pro), x9 real-time on a i5-8400). You can find brief explanations on how it's done [here](https://paulw.tokyo/post/basic-watermark-removal-in-videos/).
 
 Dependencies:
 ```sh
