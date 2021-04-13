@@ -4,4 +4,4 @@ __pycache__/
 *$py.class
 
 # Local test files
-./test_samples
+test_samples/
