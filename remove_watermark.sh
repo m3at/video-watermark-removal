@@ -11,7 +11,7 @@ output_file="${2:-$def_name}"
 # Get first few key frames
 echo "Getting key frames..."
 max_frames="${3:-50}"
-keyframes_time=$(ffprobe -hide_banner -loglevel warning -select_streams v -skip_frame nokey -show_frames -show_entries frame=pkt_pts_time "$1" | grep "pkt_pts_time=" | xargs shuf -n "$max_frames" -e | awk -F  "=" '{print $2}')
+keyframes_time=$(ffprobe -hide_banner -loglevel warning -select_streams v -skip_frame nokey -show_frames -show_entries frame=pkt_dts_time "$1" | grep "pkt_dts_time=" | xargs shuf -n "$max_frames" -e | awk -F  "=" '{print $2}')
 
 # Save them as images, in a temporary directory
 tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'watermark_remove')
@@ -28,7 +28,7 @@ echo "Extracting watermark..."
 ./get_watermark.py "$tmpdir"
 
 echo "Removing watermark in video..."
-ffmpeg -hide_banner -loglevel warning -y -stats -i "$1" -acoder copy -vf "removelogo=$tmpdir/mask.png" "$output_file"
+ffmpeg -hide_banner -loglevel warning -y -stats -i "$1" -acodec copy -vf "removelogo=$tmpdir/mask.png" "$output_file"
 
 rm -rf "$tmpdir"
 
