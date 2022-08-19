@@ -18,6 +18,9 @@ tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'watermark_remove')
 counter=0
 echo -n "Extracting frames (up to: $max_frames)... "
 for i in $keyframes_time; do
+    if ! [[ $i =~ "^[0-9]+([.][0-9]+)?$" ]]; then
+        continue
+    fi
     ffmpeg -y -hide_banner -loglevel error -ss "$i" -i "$1" -vframes 1 "$tmpdir/output_$counter.png"
     echo -n "$counter "
     ((counter=counter+1))
