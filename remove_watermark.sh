@@ -18,7 +18,8 @@ tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'watermark_remove')
 counter=0
 echo -n "Extracting frames (up to: $max_frames)... "
 for i in $keyframes_time; do
-    if ! [[ $i =~ "^[0-9]+([.][0-9]+)?$" ]]; then
+    if ! [[ "$i" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+        echo "Skipping unrecognize timing: $i"
         continue
     fi
     ffmpeg -y -hide_banner -loglevel error -ss "$i" -i "$1" -vframes 1 "$tmpdir/output_$counter.png"
@@ -26,6 +27,12 @@ for i in $keyframes_time; do
     ((counter=counter+1))
 done
 echo
+
+# Abort if we couldn't extract frames for some reason
+if [[ "$counter" -lt 2 ]]; then
+    echo "$counter frames extracted, need at least 2, aborting."
+    exit 1
+fi
 
 echo "Extracting watermark..."
 ./get_watermark.py "$tmpdir"
