@@ -25,4 +25,4 @@ Usage:
 ./remove_watermark.sh /somewhere/my_video.mp4 [/somewhere/output.mp4] [max_keyframes_to_extract]
 ```
 
-Tested on MacOS 10.14 and Ubuntu 20.04
+Tested on MacOS 10.14 (x86), MacOS 14.4 (arm) and Ubuntu 20.04
